@@ -3,6 +3,7 @@ import cors from "cors"
 import multer from "multer"
 import path from "path"
 import knex, { Knex } from "knex"
+import "dotenv/config"
 
 
 const server = express()
@@ -168,7 +169,7 @@ server.get("/pegarFotosSlide", async (req: Request, res: Response) => {
 
         for(let i = 0; i < arrayobjFotos.length; i++){
             let item = arrayobjFotos[i]
-            arrayFotos.push(["http://localhost:3000/images/" + item.path_imagem, item.id_imovel])
+            arrayFotos.push([process.env.API_URL + "/images/" + item.path_imagem, item.id_imovel])
         }
 
         res.json(arrayFotos)
@@ -240,7 +241,7 @@ server.post("/pesquisaImoveis", async (req: Request, res: Response) => {
             console.log(objImagens)
             let arrFotosAtual:string[] = []
             objImagens.forEach(item => {
-                arrFotosAtual.push("http://localhost:3000/images/" + item.path_imagem) 
+                arrFotosAtual.push( process.env.API_URL + "/images/" + item.path_imagem) 
             })
             let objResposta = {id: item.id, imagens: arrFotosAtual}
             arrResposta.push(objResposta)
@@ -276,7 +277,7 @@ server.post("/pesquisaImoveisId", async (req: Request, res: Response) => {
         let arrFinalImgs = []
         for(let i = 0; i < arrImagens.length; i++){
             let item = arrImagens[i]
-            arrFinalImgs.push("http://localhost:3000/images/" + item.path_imagem)
+            arrFinalImgs.push(process.env.API_URL + "/images/" + item.path_imagem)
         }
 
         res.json(["sucesso", [{id, imagens: arrFinalImgs}]])
@@ -313,4 +314,4 @@ server.post("/deletarItem", async (req: Request, res: Response) => {
 })
 
 
-server.listen(3000)
+server.listen(8800)
