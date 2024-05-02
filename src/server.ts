@@ -169,7 +169,7 @@ server.get("/pegarFotosSlide", async (req: Request, res: Response) => {
 
         for(let i = 0; i < arrayobjFotos.length; i++){
             let item = arrayobjFotos[i]
-            arrayFotos.push([process.env.API_URL + "/images/" + item.path_imagem, item.id_imovel])
+            arrayFotos.push(["http://" + process.env.API_URL + "/images/" + item.path_imagem, item.id_imovel])
         }
 
         res.json(arrayFotos)
@@ -241,7 +241,7 @@ server.post("/pesquisaImoveis", async (req: Request, res: Response) => {
             console.log(objImagens)
             let arrFotosAtual:string[] = []
             objImagens.forEach(item => {
-                arrFotosAtual.push( process.env.API_URL + "/images/" + item.path_imagem) 
+                arrFotosAtual.push( "http://" + process.env.API_URL + "/images/" + item.path_imagem) 
             })
             let objResposta = {id: item.id, imagens: arrFotosAtual}
             arrResposta.push(objResposta)
@@ -277,7 +277,7 @@ server.post("/pesquisaImoveisId", async (req: Request, res: Response) => {
         let arrFinalImgs = []
         for(let i = 0; i < arrImagens.length; i++){
             let item = arrImagens[i]
-            arrFinalImgs.push(process.env.API_URL + "/images/" + item.path_imagem)
+            arrFinalImgs.push("http://" + process.env.API_URL + "/images/" + item.path_imagem)
         }
 
         res.json(["sucesso", [{id, imagens: arrFinalImgs}]])
