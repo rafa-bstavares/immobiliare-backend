@@ -22,7 +22,7 @@ server.use(express.json())
         host : '127.0.0.1',
         port : 3306,
         user : 'root',
-        password : 'mySQLsenha',
+        password : process.env.SENHA_MYSQL,
         database : 'immobiliare'
     }
 })
