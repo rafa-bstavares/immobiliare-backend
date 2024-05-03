@@ -4,6 +4,8 @@ import multer from "multer"
 import path from "path"
 import knex, { Knex } from "knex"
 import "dotenv/config"
+import bcrypt from "bcrypt"
+import jwt from "jsonwebtoken"
 
 
 const server = express()
@@ -24,6 +26,36 @@ server.use(express.json())
         database : 'immobiliare'
     }
 })
+
+
+
+server.post("/login", async (req:Request, res: Response) => {
+    const {emailLogin, senhaLogin} = req.body
+
+    try{
+        let arrUser = await db('login').where({emaillogin: emailLogin}).select()
+
+        console.log(arrUser)
+
+        if(arrUser.length == 0){
+            res.status(401).json(["erro", "email errado"])
+            return
+        }
+
+        bcrypt.compare(senhaLogin, arrUser[0].senhalogin, function(err, resp) {
+            console.log("entrou na fn")
+            console.log(resp)
+            if(resp){
+                res.json(["sucesso"]) 
+            }else{
+                res.status(401).json(["erro", "senha errada"])
+            }
+        });
+    }catch{
+        res.status(400).json(["erro"])
+    }
+})
+
 
 
 
@@ -169,7 +201,7 @@ server.get("/pegarFotosSlide", async (req: Request, res: Response) => {
 
         for(let i = 0; i < arrayobjFotos.length; i++){
             let item = arrayobjFotos[i]
-            arrayFotos.push(["http://" + process.env.API_URL + "/images/" + item.path_imagem, item.id_imovel])
+            arrayFotos.push([process.env.API_URL + "/images/" + item.path_imagem, item.id_imovel])
         }
 
         res.json(arrayFotos)
@@ -241,7 +273,7 @@ server.post("/pesquisaImoveis", async (req: Request, res: Response) => {
             console.log(objImagens)
             let arrFotosAtual:string[] = []
             objImagens.forEach(item => {
-                arrFotosAtual.push( "http://" + process.env.API_URL + "/images/" + item.path_imagem) 
+                arrFotosAtual.push( process.env.API_URL + "/images/" + item.path_imagem) 
             })
             let objResposta = {id: item.id, imagens: arrFotosAtual}
             arrResposta.push(objResposta)
@@ -277,7 +309,7 @@ server.post("/pesquisaImoveisId", async (req: Request, res: Response) => {
         let arrFinalImgs = []
         for(let i = 0; i < arrImagens.length; i++){
             let item = arrImagens[i]
-            arrFinalImgs.push("http://" + process.env.API_URL + "/images/" + item.path_imagem)
+            arrFinalImgs.push( process.env.API_URL + "/images/" + item.path_imagem)
         }
 
         res.json(["sucesso", [{id, imagens: arrFinalImgs}]])
