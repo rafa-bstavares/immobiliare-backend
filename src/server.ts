@@ -372,6 +372,10 @@ server.post("/deletarItem", async (req: Request, res: Response) => {
   }
 });
 
+server.get("/status", async (req: Request, res: Response) => {
+  return res.json({ ok: true });
+});
+
 server.listen(8800, () => {
   console.log("Server running");
 });
