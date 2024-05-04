@@ -345,5 +345,9 @@ server.post("/deletarItem", async (req: Request, res: Response) => {
 
 })
 
+server.get("/status", (req: Request, res:Response) => {
+    return res.json({ok: true})
+})
+
 
 server.listen(8800)
