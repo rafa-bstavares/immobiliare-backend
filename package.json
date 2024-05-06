@@ -1,6 +1,5 @@
 {
-  "type": "module",
-  "name": "immobiliareback",
+  "name": "immobiliareback", 
   "version": "1.0.0",
   "description": "",
   "main": "index.js",

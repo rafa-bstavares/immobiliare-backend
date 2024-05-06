@@ -73,6 +73,7 @@ server.post(
       bairro: string;
       tipoImovel: string;
       metragem: string;
+      metragemFinal: string;
       numQuartos: string;
       numSuites: string;
       numVagas: string;
@@ -95,6 +96,7 @@ server.post(
       bairro,
       tipoImovel,
       metragem,
+      metragemFinal,
       numQuartos,
       numSuites,
       numVagas,
@@ -126,6 +128,7 @@ server.post(
             bairro,
             tipoimovel: tipoImovel,
             metragem,
+            metragemfinal: metragemFinal,
             numquartos: numQuartos,
             numsuites: numSuites,
             numvagas: numVagas,
@@ -245,6 +248,7 @@ server.get("/infoImoveis", async (req: Request, res: Response) => {
     bairro: string;
     tipoimovel: string;
     metragem: string;
+    metragemfinal: string;
     numquartos: string;
     numsuites: string;
     numvagas: string;
@@ -276,13 +280,20 @@ server.post("/pesquisaImoveis", async (req: Request, res: Response) => {
 
   const { bairrosPesquisa, tiposPesquisa } = req.body;
 
+  console.log(bairrosPesquisa)
+  console.log(tiposPesquisa)
+
   try {
+    console.log(bairrosPesquisa.length)
+    console.log(tiposPesquisa.length)
+    console.log(bairrosPesquisa.length > 0 && tiposPesquisa > 0)
     let idsPesquisa;
-    if (bairrosPesquisa.length > 0 && tiposPesquisa > 0) {
-      idsPesquisa = await db("imoveis")
-        .select("id")
-        .whereIn("bairro", bairrosPesquisa)
-        .whereIn("tipoimovel", tiposPesquisa);
+    if(bairrosPesquisa.length > 0 && tiposPesquisa.length > 0){
+      console.log("escolheu os dois")
+
+        idsPesquisa = await db("imoveis").select("id").whereIn("bairro", bairrosPesquisa).whereIn("tipoimovel", tiposPesquisa);
+
+        console.log(idsPesquisa)
     } else if (bairrosPesquisa.length == 0 && tiposPesquisa.length > 0) {
       idsPesquisa = await db("imoveis")
         .select("id")
