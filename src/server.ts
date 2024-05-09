@@ -5,7 +5,7 @@ import path from "path";
 import knex, { Knex } from "knex";
 import "dotenv/config";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import fs from "fs";
 
 const server = express();
 server.use(cors());
@@ -366,14 +366,28 @@ server.post("/deletarItem", async (req: Request, res: Response) => {
     id: string;
   };
 
+  type objPathType = {path_imagem: string}
+
   const { id }: bodyType = req.body;
 
     try{
+        let arrPathsImgsRemover: objPathType[] = []
         await db.transaction(async (trx) => {
+            arrPathsImgsRemover = await trx("imagens").select("path_imagem").where({id_imovel: id})
+
             let arrRespImgs = await trx("imagens").where({id_imovel: id}).del()
 
             let arrImovel = await trx("imoveis").where({id}).del()
         })
+
+        for(let i = 0; i < arrPathsImgsRemover.length; i++){
+          let item = arrPathsImgsRemover[i]
+          fs.unlink("../immobiliareBack/public/images/" + item.path_imagem, function (err) {
+            if (err) throw err;
+            console.log('File deleted!');
+          });
+        }
+
         res.json(["sucesso", "Imovel deletado com sucesso"])
     }catch(err){
         res.json(["erro", "ocorreu algum erro na remoção do imóvel, por favor tente novamente"])
