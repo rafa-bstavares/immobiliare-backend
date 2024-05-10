@@ -382,7 +382,7 @@ server.post("/deletarItem", async (req: Request, res: Response) => {
 
         for(let i = 0; i < arrPathsImgsRemover.length; i++){
           let item = arrPathsImgsRemover[i]
-          fs.unlink("../immobiliareBack/public/images/" + item.path_imagem, function (err) {
+          fs.unlink("../" + process.env.NOME_PASTA_RAIZ + "/public/images/" + item.path_imagem, function (err) {
             if (err) throw err;
             console.log('File deleted!');
           });
