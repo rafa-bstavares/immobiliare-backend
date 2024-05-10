@@ -8,7 +8,13 @@ import bcrypt from "bcrypt";
 import fs from "fs";
 
 const server = express();
-server.use(cors());
+
+const corsOptions = {
+  origin: "https://www.immobiliaresp.com.br",
+  optionsSuccessStatus: 200,
+};
+
+server.use(cors(corsOptions));
 server.use(express.json());
 
 //localhost:3000/public/images/sadfsdffaf
