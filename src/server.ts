@@ -11,6 +11,7 @@ const server = express();
 
 const corsOptions = {
   origin: "https://www.immobiliaresp.com.br",
+  credentials: true,
   optionsSuccessStatus: 200,
 };
 
