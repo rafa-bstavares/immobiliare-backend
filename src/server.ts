@@ -10,7 +10,7 @@ import fs from "fs";
 const server = express();
 
 const corsOptions = {
-  origin: "https://www.immobiliaresp.com.br",
+  origin: ["https://www.immobiliaresp.com.br", "http://localhost:5173"],
   credentials: true,
   optionsSuccessStatus: 200,
 };
@@ -261,6 +261,7 @@ server.get("/infoImoveis", async (req: Request, res: Response) => {
     numvagas: string;
     preco: string;
     codigo: string;
+    descricao: string;
   };
 
   type resType = objRespType[];
@@ -403,6 +404,29 @@ server.post("/deletarItem", async (req: Request, res: Response) => {
 
 
 })
+
+//ROTAS DE DESCRICAO
+server.post("/mudarDesc", async (req: Request, res: Response) => {
+    type typeBody = {
+      idAlterarDesc: string,
+      novaDescricao: string
+    }
+
+    const {idAlterarDesc, novaDescricao}: typeBody = req.body
+
+    console.log()
+
+    try{
+        await db('imoveis').update({descricao: novaDescricao}).where({id: idAlterarDesc})
+        res.json(["sucesso"])
+    }catch(err){
+        res.json(["erro", "ocorreu algum erro ao adicionar a descrição, por favor, tente novamente"])
+    }
+
+
+})
+
+
 
 server.get("/status", (req: Request, res:Response) => {
     return res.json({ok: true})
