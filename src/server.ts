@@ -82,7 +82,9 @@ server.post(
       metragem: string;
       metragemFinal: string;
       numQuartos: string;
+      numQuartosFinal: string;
       numSuites: string;
+      numSuitesFinal: string;
       numVagas: string;
       preco: string;
       codigo: string;
@@ -105,7 +107,9 @@ server.post(
       metragem,
       metragemFinal,
       numQuartos,
+      numQuartosFinal,
       numSuites,
+      numSuitesFinal,
       numVagas,
       preco,
       codigo,
@@ -137,7 +141,9 @@ server.post(
             metragem,
             metragemfinal: metragemFinal,
             numquartos: numQuartos,
+            numquartosfinal: numQuartosFinal,
             numsuites: numSuites,
+            numsuitesfinal: numSuitesFinal,
             numvagas: numVagas,
             preco,
             codigo,
