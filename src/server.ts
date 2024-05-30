@@ -9,13 +9,9 @@ import fs from "fs";
 
 const server = express();
 
-const corsOptions = {
-  origin: "https://www.immobiliaresp.com.br",
-  credentials: true,
-  optionsSuccessStatus: 200,
-};
 
-server.use(cors(corsOptions));
+
+server.use(cors());
 server.use(express.json());
 
 //localhost:3000/public/images/sadfsdffaf
