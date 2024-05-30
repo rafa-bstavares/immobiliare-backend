@@ -10,7 +10,7 @@ import fs from "fs";
 const server = express();
 
 const corsOptions = {
-  origin: ["https://www.immobiliaresp.com.br", "http://localhost:5173"],
+  origin: "https://www.immobiliaresp.com.br",
   credentials: true,
   optionsSuccessStatus: 200,
 };
@@ -103,7 +103,7 @@ server.post(
 
     const {
       bairro,
-      tipoImovel,
+      tipoImovel, 
       metragem,
       metragemFinal,
       numQuartos,
@@ -187,6 +187,7 @@ server.post(
     }
   }
 );
+
 
 server.get("/pegarBairros", async (req: Request, res: Response) => {
   let arrBairros = await db.select("bairro").from("bairros");
